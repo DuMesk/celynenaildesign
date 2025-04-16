@@ -4,7 +4,7 @@
     --primary-dark: #DB4D6D; /* Rosa escuro */
     --secondary: #D4AFB9; /* Rosa pó */
     --accent: #FFD166; /* Dourado para detalhes */
-    --dark: #3A3238; /* Cinza escuro/roxo */
+    --dark: #1F2121; /* Cinza escuro/roxo */
     --light: #FFF5F7; /* Rosa muito claro para fundos */
     --white: #FFFFFF;
     --black: #333333;
@@ -18,7 +18,7 @@
 }
 
 body {
-    background-color: var(--light);
+    background-color: #380D15;
     color: var(--black);
     line-height: 1.6;
 }
@@ -30,7 +30,7 @@ body, html {
 
 /* Header */
 header {
-    background-color: var(--white);
+    background-color: var(--dark);
     box-shadow: 0 2px 15px rgba(216, 112, 147, 0.1);
     position: fixed;
     width: 100%;
@@ -65,7 +65,7 @@ nav ul li {
 
 nav ul li a {
     text-decoration: none;
-    color: var(--dark);
+    color: #BEBDBA;
     font-weight: 600;
     transition: color 0.3s;
     font-size: 0.95rem;
@@ -210,7 +210,7 @@ section {
 .section-title {
     text-align: center;
     margin-bottom: 4rem;
-    color: var(--dark);
+    color: #DB4D6D;
 }
 
 .section-title h2 {
@@ -235,7 +235,7 @@ section {
 
 .section-title p {
     font-size: 1.1rem;
-    color: var(--black);
+    color: #FF6B8B;
     max-width: 700px;
     margin: 0 auto;
 }
@@ -574,7 +574,7 @@ section {
     display: block;
     margin-bottom: 0.6rem;
     font-weight: 600;
-    color: var(--dark);
+    color: FF6B8B
     font-size: 0.95rem;
 }
 
@@ -925,4 +925,62 @@ footer::before {
 .logo-link:focus {
     outline: none;
     border: none;
+}
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #25D366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .hero > div:first-child {
+        order: 1;
+        margin-bottom: 1.5rem;
+    }
+    
+    .hero-content {
+        order: 2;
+    }
+    
+    .whatsapp-button {
+        margin: 1rem auto 0;
+    }
 }
