@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Celyne Nail Design - Design de unhas personalizado e de alta qualidade. Unhas perfeitas para realçar sua beleza com elegância e estilo.">
+    <meta name="description"
+        content="Celyne Nail Design - Design de unhas personalizado e de alta qualidade. Unhas perfeitas para realçar sua beleza com elegância e estilo.">
     <title>Celyne Nail Design | Design de Unhas Profissional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <!-- Header (Logo será substituída pela logo da Celyne) -->
+
     <header>
         <div class="header-container">
             <a href="#" class="logo-link" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
                 <img src="https://i.ibb.co/ynSRGhKM/image.png" alt="Celyne Nail Design" class="logo">
             </a>
-            
+
             <nav id="mainNav">
                 <ul>
                     <li><a href="#benefits">Vantagens</a></li>
@@ -25,18 +29,19 @@
                     <li><a href="#contact">Contato</a></li>
                 </ul>
             </nav>
-            
+
             <a href="#contact" class="cta-button">Agendar Horário</a>
-            
+
             <div class="mobile-menu" id="mobileMenu">
                 <i class="fas fa-bars"></i>
             </div>
         </div>
     </header>
+    <div class="fotofoto"></div>
     <!-- Hero Section com foto da Celyne -->
     <section class="hero">
-        <div>
-            <img src="https://i.ibb.co/8DrWpskR/image.png" alt="">
+        <div class="hero-foto">
+            <img src="https://i.ibb.co/8DrWpskR/image.png" alt="Celyne Pereira" style="height: 450px;">
         </div>
         <div class="hero-content">
             <h1>Design de Unhas que Realça Sua Beleza</h1>
@@ -53,7 +58,7 @@
             <h2>Por que Escolher a Celyne Nail Design?</h2>
             <p>Experiência premium em cuidados com as unhas</p>
         </div>
-        
+
         <div class="benefits-grid">
             <div class="benefit-card">
                 <div class="benefit-icon">
@@ -62,7 +67,7 @@
                 <h3>Qualidade Premium</h3>
                 <p>Produtos de alta qualidade que garantem durabilidade e saúde para suas unhas.</p>
             </div>
-            
+
             <div class="benefit-card">
                 <div class="benefit-icon">
                     <i class="fas fa-palette"></i>
@@ -70,7 +75,7 @@
                 <h3>Designs Exclusivos</h3>
                 <p>Criações personalizadas que refletem seu estilo e personalidade.</p>
             </div>
-            
+
             <div class="benefit-card">
                 <div class="benefit-icon">
                     <i class="fas fa-heart"></i>
@@ -78,7 +83,7 @@
                 <h3>Cuidado Personalizado</h3>
                 <p>Atendimento individualizado para garantir a satisfação total.</p>
             </div>
-            
+
             <div class="benefit-card">
                 <div class="benefit-icon">
                     <i class="fas fa-certificate"></i>
@@ -86,7 +91,7 @@
                 <h3>Profissional Certificada</h3>
                 <p>Técnicas avançadas e constante atualização nas tendências.</p>
             </div>
-            
+
             <div class="benefit-card">
                 <div class="benefit-icon">
                     <i class="fas fa-thumbs-up"></i>
@@ -94,7 +99,7 @@
                 <h3>Higiene Impecável</h3>
                 <p>Ambiente esterilizado e protocolos rigorosos de limpeza.</p>
             </div>
-            
+
             <div class="benefit-card">
                 <div class="benefit-icon">
                     <i class="fas fa-gem"></i>
@@ -111,7 +116,7 @@
             <h2>Nossos Trabalhos</h2>
             <p>Inspire-se com nossas criações</p>
         </div>
-        
+
         <div class="gallery-container">
             <!-- Fotos de unhas (substituir pelas reais) -->
             <div class="gallery-item">
@@ -135,16 +140,16 @@
             <h2>Nossos Serviços</h2>
             <p>Cuidados especializados para suas unhas</p>
         </div>
-        
+
         <div class="services-grid">
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-paint-brush"></i>
                 </div>
-                <h3>Alongamento de Gel</h3>
+                <h3>Alongamento em Gel</h3>
                 <p>Técnica que proporciona unhas longas e resistentes com acabamento natural.</p>
             </div>
-            
+
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-magic"></i>
@@ -152,7 +157,7 @@
                 <h3>Design Personalizado</h3>
                 <p>Criação exclusiva de arte em unhas conforme seu estilo e preferência.</p>
             </div>
-            
+
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-leaf"></i>
@@ -160,7 +165,7 @@
                 <h3>Manutenção de Unhas</h3>
                 <p>Cuidados essenciais para manter suas unhas sempre perfeitas.</p>
             </div>
-            
+
             <div class="service-card">
                 <div class="service-icon">
                     <i class="fas fa-star"></i>
@@ -177,17 +182,19 @@
             <h2>O que Nossas Clientes Dizem</h2>
             <p>Depoimentos de quem já experimentou nosso trabalho</p>
         </div>
-        
+
         <div class="testimonials-container">
             <div class="testimonial-slider">
                 <div class="testimonial-card">
-                    <p>"A Celyne transformou minhas unhas! Sou cliente há 2 anos e nunca tive problemas. Os designs são incríveis e duram semanas. Super recomendo!"</p>
-                    
+                    <p>"A Celyne transformou minhas unhas! Sou cliente há 2 meses e nunca tive problemas. Os designs são
+                        incríveis e duram semanas. Super recomendo!"</p>
+
                     <div class="client-info">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Carolina" class="client-avatar">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Carolina"
+                            class="client-avatar">
                         <div>
                             <div class="client-name">Ana Carolina</div>
-                            <div class="client-role">Cliente há 2 anos</div>
+                            <div class="client-role">Cliente há 2 meses</div>
                         </div>
                     </div>
                 </div>
@@ -201,7 +208,7 @@
             <h2>Siga Nossas Redes Sociais</h2>
             <p>Acompanhe nossos trabalhos e novidades</p>
         </div>
-        
+
         <div class="social-buttons">
             <a href="https://www.instagram.com/celynenaildesigner" class="social-button instagram" target="_blank">
                 <i class="fab fa-instagram"></i> Instagram
@@ -213,21 +220,27 @@
                 <i class="fab fa-tiktok"></i> TikTok
             </a>
         </div>
-        
+
         <div class="instagram-widget">
             <h3>Acompanhe nosso Instagram</h3>
             <div class="instagram-feed">
                 <!-- Widget do Instagram -->
                 <div style="max-width: 350px; margin: 0 auto;">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DFdBQXXtH4K/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/p/DFdBQXXtH4K/" data-instgrm-version="14">
+                    </blockquote>
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
                 <div style="max-width: 350px; margin: 0 auto;">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DICKyF2JGF9/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/reel/DICKyF2JGF9/" data-instgrm-version="14">
+                    </blockquote>
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
                 <div style="max-width: 350px; margin: 0 auto;">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DGp3UYfttPz/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/p/DGp3UYfttPz/" data-instgrm-version="14">
+                    </blockquote>
                     <script async src="//www.instagram.com/embed.js"></script>
                 </div>
             </div>
@@ -240,67 +253,67 @@
             <h2>Agende Seu Horário</h2>
             <p>Pronta para realçar sua beleza com unhas perfeitas?</p>
         </div>
-        
+
         <div class="contact-container">
             <div class="contact-info">
                 <h3>Informações de Contato</h3>
-                
+
                 <div class="contact-item">
                     <i class="fab fa-whatsapp"></i>
                     <p>(61) 98587-9423</p>
                 </div>
-                
+
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
                     <p>celynenaildesign@gmail.com</p>
                 </div>
-                
+
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <p>Brasília - DF, Brasil</p>
                 </div>
-                
-                <a href="https://wa.me/5561985879423" class="whatsapp-button" style="display: inline-block; margin-top: 1.5rem;">
+
+                <a href="https://wa.me/5561985879423" class="whatsapp-button"
+                    style="display: inline-block; margin-top: 1.5rem;">
                     <i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp
                 </a>
             </div>
-            
+
             <div class="contact-form">
                 <form id="formContato" method="POST">
                     <div class="form-group">
-                      <label for="name">Nome Completo</label>
-                      <input type="text" id="name" name="name" required>
+                        <label for="nome" style="color: #D4AFB9;">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" required>
                     </div>
-                  
                     <div class="form-group">
-                      <label for="email">E-mail</label>
-                      <input type="email" id="email" name="email" required>
+                        <label for="dataHora" style="color: #D4AFB9;">Data e Hora do Atendimento</label>
+                        <input type="datetime-local" id="dataHora" name="dataHora" required>
                     </div>
-                  
+
                     <div class="form-group">
-                      <label for="phone">Telefone</label>
-                      <input type="tel" id="phone" name="phone" required>
+                        <label for="telefone" style="color: #D4AFB9;">Telefone</label>
+                        <input type="tel" id="telefone" name="telefone" required>
                     </div>
-                  
+
                     <div class="form-group">
-                      <label for="service">Serviço Desejado</label>
-                      <select id="service" name="service" required>
-                        <option value="">Selecione...</option>
-                        <option value="alongamento">Alongamento de Gel</option>
-                        <option value="design">Design Personalizado</option>
-                        <option value="francesinha">Francesinha</option>
-                        <option value="manutencao">Manutenção</option>
-                        <option value="outros">Outros</option>
-                      </select>
+                        <label for="servico" style="color: #D4AFB9;">Serviço Desejado</label>
+                        <select id="servico" name="servico" required>
+                            <option value="">Selecione...</option>
+                            <option value="alongamento">Alongamento em Gel</option>
+                            <option value="design">Design Personalizado</option>
+                            <option value="francesinha">Francesinha</option>
+                            <option value="manutencao">Manutenção</option>
+                            <option value="outros">Outros</option>
+                        </select>
                     </div>
-                  
+
                     <div class="form-group">
-                      <label for="message">Mensagem (Opcional)</label>
-                      <textarea id="message" name="message"></textarea>
+                        <label for="mensagem" style="color: #D4AFB9;">Mensagem (Opcional)</label>
+                        <textarea id="mensagem" name="mensagem"></textarea>
                     </div>
-                  
+
                     <button type="submit" class="cta-button" style="width: 100%;">Enviar Agendamento</button>
-                  </form>
+                </form>
             </div>
         </div>
     </section>
@@ -310,15 +323,19 @@
         <div class="footer-container">
             <div class="footer-about">
                 <img src="https://i.ibb.co/sJCQMk8N/logotransp.png" alt="Celyne Nail Design" class="footer-logo">
-                <p>Design de unhas profissional com qualidade premium e atendimento personalizado. Realce sua beleza com nossas criações exclusivas.</p>
-                
+                <p>Design de unhas profissional com qualidade premium e atendimento personalizado. Realce sua beleza com
+                    nossas criações exclusivas.</p>
+
                 <div class="footer-social">
-                    <a href="https://www.instagram.com/celynenaildesigner" target="_blank" style="font-size: 50px;"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/share/1EHSQhYEto/" target="_blank" style="font-size: 50px;"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.tiktok.com/@celynepereira" target="_blank" style="font-size: 50px;"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/celynenaildesigner" target="_blank" style="font-size: 50px;"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/1EHSQhYEto/" target="_blank" style="font-size: 50px;"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.tiktok.com/@celynepereira" target="_blank" style="font-size: 50px;"><i
+                            class="fab fa-tiktok"></i></a>
                 </div>
             </div>
-            
+
             <div class="footer-links">
                 <h3>Links Rápidos</h3>
                 <ul>
@@ -329,7 +346,7 @@
                     <li><a href="#contact">Contato</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-links">
                 <h3>Serviços</h3>
                 <ul>
@@ -340,7 +357,7 @@
                     <li><a href="#">Unhas Decoradas</a></li>
                 </ul>
             </div>
-            
+
             <div class="footer-contact">
                 <h3>Contato</h3>
                 <p><i class="fab fa-whatsapp"></i> (61) 98587-9423</p>
@@ -348,13 +365,14 @@
                 <p><i class="fas fa-map-marker-alt"></i> Brasília - DF, Brasil</p>
             </div>
         </div>
-        
+
         <div class="footer-bottom">
             <p>&copy; 2023 Celyne Nail Design. Todos os direitos reservados.</p>
             <p>Criado por <a href="https://instagram.com/codesoluction" target="_blank">codesoluction</a></p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script2.js"></script>
 </body>
+
 </html>
