@@ -56,19 +56,19 @@ const testimonials = [
     {
         quote: "A Celyne é incrível! Minhas unhas ficam perfeitas e duram semanas. O atendimento é impecável e o ambiente super higiênico.",
         name: "Ana Carolina",
-        role: "Cliente há 2 anos",
+        role: "Cliente",
         avatar: "https://randomuser.me/api/portraits/women/44.jpg"
     },
     {
         quote: "Nunca encontrei alguém tão detalhista como a Celyne. Os designs são únicos e ela tem uma paciência incrível para fazer exatamente o que eu quero.",
         name: "Mariana Silva",
-        role: "Cliente VIP",
+        role: "Cliente",
         avatar: "https://randomuser.me/api/portraits/women/32.jpg"
     },
     {
         quote: "Depois que conheci o trabalho da Celyne, nunca mais fui em outra profissional. Minhas unhas estão sempre impecáveis e recebo muitos elogios!",
         name: "Juliana Santos",
-        role: "Cliente Mensal",
+        role: "Cliente",
         avatar: "https://randomuser.me/api/portraits/women/28.jpg"
     }
 ];
@@ -105,66 +105,7 @@ if (testimonialContainer) {
     }, 5000);
 }
 
-// =============================================
-// FORMULÁRIO DE CONTATO
-// =============================================
-const formContato = document.getElementById('formContato');
 
-if (formContato) {
-    formContato.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
-        const submitButton = this.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-
-        try {
-            // 1. Preparar dados do formulário
-            const formData = {
-                nome: this.name.value.trim(),
-                email: this.email.value.trim(),
-                telefone: this.phone.value.trim() || 'Não informado',
-                servico: this.service.value,
-                mensagem: this.message.value.trim() || 'Nenhuma mensagem adicional'
-            };
-
-            // 2. Validação básica
-            if (!formData.nome || !formData.telefone) {
-                throw new Error("Por favor, preencha pelo menos seu nome e telefone!");
-            }
-
-            // 3. Desabilitar botão e mudar texto
-            submitButton.disabled = true;
-            submitButton.textContent = "Enviando...";
-
-            // 4. Enviar mensagem pelo WhatsApp como fallback
-            const whatsappNumber = "5561985879423";
-            const whatsappMessage = `Olá Celyne! Gostaria de agendar um horário.\n\n*Nome:* ${formData.nome}\n*Telefone:* ${formData.telefone}\n*Serviço:* ${formData.servico}\n\n${formData.mensagem}`;
-            
-            // URL encode a mensagem
-            const encodedMessage = encodeURIComponent(whatsappMessage);
-            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            
-            // 5. Redirecionar para WhatsApp
-            window.open(whatsappUrl, '_blank');
-            
-            // 6. Resetar formulário
-            this.reset();
-            
-            // 7. Feedback visual
-            submitButton.textContent = "✓ Enviado!";
-            setTimeout(() => {
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }, 2000);
-
-        } catch (error) {
-            console.error("Erro no envio:", error);
-            alert(`⚠️ ${error.message}`);
-            submitButton.disabled = false;
-            submitButton.textContent = originalText;
-        }
-    });
-}
 
 // =============================================
 // ANIMAÇÃO DE SCROLL
@@ -184,6 +125,7 @@ const animateOnScroll = () => {
 
 window.addEventListener('scroll', animateOnScroll);
 window.addEventListener('load', animateOnScroll);
+
 
 // =============================================
 // GALERIA LIGHTBOX (OPCIONAL)
@@ -235,9 +177,67 @@ const typeWriter = (element, text, speed = 50) => {
     }, speed);
 };
 
-// Se quiser usar em algum título:
-// const heroTitle = document.querySelector('.hero h1');
-// if (heroTitle) {
-//     heroTitle.innerHTML = '';
-//     typeWriter(heroTitle, heroTitle.dataset.text || 'Design de Unhas que Realça Sua Beleza');
-// }
+// =============================================
+// CADASTRO NO WHATSAPP E GOOGLE SHEETS
+// =============================================
+
+document.getElementById("formContato").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const nome = document.getElementById("nome").value;
+  const telefone = document.getElementById("telefone").value;
+  const servico = document.getElementById("servico").value;
+  const mensagem = document.getElementById("mensagem").value;
+  const botao = document.querySelector(".cta-button");
+  const dataHora = document.getElementById("dataHora").value;
+
+  const dados = {
+    nome,
+    telefone,
+    servico,
+    mensagem,
+    dataHora
+  };
+
+  // Envia para Google Sheets (usando no-cors se necessário)
+  fetch("https://script.google.com/macros/s/AKfycbwYKF2QaqIXRD7zmjfnZFJzWlbzV2xUUJdq-vH83RMitdEg2BqAK_Y4BEvbf_59IeEqPg/exec", {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(dados),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+
+  // Prepara o link do WhatsApp
+  const mensagemWhatsApp = `*Agendamento via site*\n\n*Nome:* ${nome}\n*Telefone:* ${telefone}\n*Serviço:* ${servico}\n*Data/Hora:* ${dataHora}\n*Mensagem:* ${mensagem}`;
+
+  const telefoneDestino = "5561985879423"; // Altere para o número correto
+  const linkWhatsApp = `https://wa.me/${telefoneDestino}?text=${encodeURIComponent(mensagemWhatsApp)}`;
+
+  // 1. Exibir alerta de sucesso
+  Swal.fire({
+    title: 'Agendamento enviado!',
+    text: 'Você será redirecionado para o WhatsApp.',
+    icon: 'success',
+    confirmButtonColor: '#D4AFB9'
+  }).then(() => {
+    // 2. Redireciona pro WhatsApp
+    window.open(linkWhatsApp, "_blank");
+
+    // 3. Desabilita o botão e muda o texto
+    botao.disabled = true;
+    botao.style.backgroundColor = '#ccc';
+    botao.innerText = 'Enviado';
+
+    // 4. Limpa o formulário
+    document.getElementById("formContato").reset();
+
+    // (Opcional) Reativa botão depois de alguns segundos:
+    setTimeout(() => {
+      botao.disabled = false;
+      botao.style.backgroundColor = ''; // volta ao normal
+      botao.innerText = 'Enviar Agendamento';
+    }, 5000); // reativa em 5 segundos
+  });
+});
