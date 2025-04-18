@@ -48,6 +48,10 @@ header {
     margin: 0 auto;
 }
 
+.fotofoto {
+    height: 60px;
+}
+
 .logo {
     height: 150px;
     transition: all 0.3s ease;
@@ -124,7 +128,7 @@ nav ul li a:hover::after {
 /* Hero Section */
 .hero {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     background: linear-gradient(rgba(58, 50, 56, 0.6), rgba(58, 50, 56, 0.6)), 
                 url('https://images.unsplash.com/photo-1596704017256-9a8cb4e8a908?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
     background-size: cover;
@@ -143,9 +147,13 @@ nav ul li a:hover::after {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100px;
-    background: linear-gradient(to top, var(--light), transparent);
+    height: 300px;
+    background: linear-gradient(to top, var(--dark), transparent);
     z-index: 1;
+}
+
+.hero-foto{
+    padding-top: 200px;
 }
 
 .hero-content {
@@ -783,6 +791,10 @@ footer::before {
     .hero h1 {
         font-size: 2.5rem;
     }
+
+    .hero-foto{
+        padding-top: 10px;
+    }
     
     .section {
         padding: 5rem 5%;
@@ -983,4 +995,6 @@ footer::before {
     .whatsapp-button {
         margin: 1rem auto 0;
     }
+
+
 }
