@@ -998,3 +998,170 @@ footer::before {
 
 
 }
+
+
+.swal2-popup small {
+    color: #666;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 10px;
+}
+
+/* CSS para o Flatpickr */
+.flatpickr-calendar {
+    z-index: 99999 !important;
+    width: auto !important;
+  }
+  
+  .flatpickr-months {
+    padding: 5px 0 !important;
+  }
+  
+  #data {
+    background-color: white;
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+/* ============ ESTILOS PARA O AGENDAMENTO ============ */
+
+/* Container do formulário */
+.contact-form {
+    background-color: #FFF5F7;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(255, 107, 139, 0.1);
+}
+
+/* Estilo para a seção de horários */
+#horarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 12px;
+    margin-top: 15px;
+    min-height: 60px;
+}
+
+/* Botões de horário - estado normal */
+.botao-horario {
+    background-color: var(--primary);
+    color: white;
+    padding: 12px 5px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efeito hover */
+.botao-horario:not(.horario-indisponivel):hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(255, 107, 139, 0.3);
+}
+
+/* Horário selecionado */
+.botao-horario.selecionado {
+    background-color: var(--primary-dark);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--primary);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 107, 139, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 107, 139, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 107, 139, 0); }
+}
+
+/* Horário indisponível */
+.botao-horario.horario-indisponivel {
+    background-color: #f5f5f5;
+    color: #999;
+    cursor: not-allowed;
+    text-decoration: line-through;
+    box-shadow: none;
+}
+
+/* Ícones nos botões */
+.botao-horario i {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+/* Placeholder quando não há horários */
+.horario-placeholder {
+    color: #666;
+    font-style: italic;
+    text-align: center;
+    padding: 15px;
+    grid-column: 1 / -1;
+}
+
+/* Mensagem de carregamento */
+.horario-placeholder.loading {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #horarios {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+    
+    .botao-horario {
+        padding: 10px 5px;
+        font-size: 0.9rem;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Adicione isso no final do seu CSS */
+#horarios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.botao-horario {
+    background: linear-gradient(135deg, #FF6B8B, #DB4D6D);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.botao-horario.selecionado {
+    background: #DB4D6D;
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #FF6B8B;
+}
