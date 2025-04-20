@@ -190,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // =============================================
     const initBookingSystem = () => {
         // URLs da API
-        const URL_DISPONIBILIDADE = "https://script.google.com/macros/s/AKfycbwJFkaEIvPNjkXfQ9_9J0CqKCY-9GcaQePzA9nq4uL0jaIji-UBu3ekwTB43XOYJxF2Uw/exec";
-        const URL_AGENDAMENTO = "https://script.google.com/macros/s/AKfycbwJFkaEIvPNjkXfQ9_9J0CqKCY-9GcaQePzA9nq4uL0jaIji-UBu3ekwTB43XOYJxF2Uw/exec";
+        const URL_DISPONIBILIDADE = "https://script.google.com/macros/s/AKfycbxQZ9hw4m1Bk9hc5YoOu6bu3bSw_a6E5c4r5T7WXg3A4ltQ78yEP1zJ3A3PnBK9nXJysw/exec";
+        const URL_AGENDAMENTO = "https://script.google.com/macros/s/AKfycbxQZ9hw4m1Bk9hc5YoOu6bu3bSw_a6E5c4r5T7WXg3A4ltQ78yEP1zJ3A3PnBK9nXJysw/exec";
         const TELEFONE_WHATSAPP = "5561985879423";
 
         // Elementos do formulário
