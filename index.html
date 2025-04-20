@@ -6,9 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Celyne Nail Design - Design de unhas personalizado e de alta qualidade. Unhas perfeitas para realçar sua beleza com elegância e estilo.">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <title>Celyne Nail Design | Design de Unhas Profissional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="icon" href="caminho-do-icone/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -186,15 +190,15 @@
         <div class="testimonials-container">
             <div class="testimonial-slider">
                 <div class="testimonial-card">
-                    <p>"A Celyne transformou minhas unhas! Sou cliente há 2 meses e nunca tive problemas. Os designs são
+                    <p>"A Celyne transformou minhas unhas! Sou cliente há 6 meses e nunca tive problemas. Os designs são
                         incríveis e duram semanas. Super recomendo!"</p>
 
                     <div class="client-info">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Carolina"
+                        <img src="https://i.ibb.co/tTCr8Rn5/image.png" alt="Ana Carolina"
                             class="client-avatar">
                         <div>
-                            <div class="client-name">Ana Carolina</div>
-                            <div class="client-role">Cliente há 2 meses</div>
+                            <div class="client-name">Mary Mascarenhas</div>
+                            <div class="client-role">Cliente</div>
                         </div>
                     </div>
                 </div>
@@ -269,8 +273,9 @@
                 </div>
 
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>Brasília - DF, Brasil</p>
+                    <i class="fas fa-map-marker-alt"> </i> 
+                    <p> </p>
+                    <p> Brasília - DF, Brasil</p>
                 </div>
 
                 <a href="https://wa.me/5561985879423" class="whatsapp-button"
@@ -281,40 +286,65 @@
 
             <div class="contact-form">
                 <form id="formContato">
+                    <h2>Agende seu horário</h2>
+                    
                     <div class="form-group">
-                        <label for="nome" style="color: #D4AFB9;">Nome Completo</label>
-                        <input type="text" id="nome" name="nome" required>
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" required placeholder="Seu nome completo" />
                     </div>
+                    
                     <div class="form-group">
-                        <label for="dataHora" style="color: #D4AFB9;">Data e Hora do Atendimento</label>
-                        <input type="datetime-local" id="dataHora" name="dataHora" required>
+                        <label for="telefone">WhatsApp</label>
+                        <input type="text" id="telefone" required placeholder="(61) 99999-9999" />
+                        <small class="hint">Formato: (61) 99999-9999</small>
                     </div>
-
+                    
                     <div class="form-group">
-                        <label for="telefone" style="color: #D4AFB9;">Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="servico" style="color: #D4AFB9;">Serviço Desejado</label>
-                        <select id="servico" name="servico" required>
-                            <option value="">Selecione...</option>
-                            <option value="alongamento">Alongamento em Gel</option>
-                            <option value="design">Design Personalizado</option>
-                            <option value="francesinha">Francesinha</option>
-                            <option value="manutencao">Manutenção</option>
-                            <option value="outros">Outros</option>
+                        <label for="servico">Serviço Desejado</label>
+                        <select id="servico" required>
+                            <option value="" disabled selected>Selecione um serviço</option>
+                            <option value="Manicure">Manicure</option>
+                            <option value="Pedicure">Pedicure</option>
+                            <option value="Alongamento de Unhas">Alongamento de Unhas</option>
+                            <option value="Design Personalizado">Design Personalizado</option>
+                            <option value="Francesinha">Francesinha</option>
+                            <option value="Manutenção">Manutenção</option>
+                            <option value="Outro">Outro (especifique na mensagem)</option>
                         </select>
                     </div>
-
-                    <div class="form-group">
-                        <label for="mensagem" style="color: #D4AFB9;">Mensagem (Opcional)</label>
-                        <textarea id="mensagem" name="mensagem"></textarea>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="text" id="data" name="data" placeholder="Selecione uma data" readonly required />
+                            <div id="horarios-disponiveis" class="mt-3"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Horários Disponíveis</label>
+                            <div class="horarios-grid" id="horarios">
+                                <div class="horario-placeholder">Selecione uma data primeiro</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <button type="submit" class="cta-button" style="width: 100%;">Enviar Agendamento</button>
+                    
+                    <input type="hidden" id="dataHora" name="dataHora" />
+                    
+                    <div class="form-group">
+                        <label for="mensagem">Observações</label>
+                        <textarea id="mensagem" placeholder="Alguma preferência especial ou detalhe que devemos saber?"></textarea>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <button type="submit" class="cta-button">
+                            <span class="button-text">Confirmar Agendamento</span>
+                            <i class="fas fa-calendar-check button-icon"></i>
+                        </button>
+                        <p class="form-disclaimer">Ao agendar, você concorda com nossos <a href="#">Termos de Serviço</a></p>
+                    </div>
                 </form>
             </div>
+
         </div>
     </section>
 
@@ -372,7 +402,13 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/l10n/pt.js"></script>
+    <script src="/script.js"></script>
+    <script src="flat.js"></script>
 </body>
 
 </html>
