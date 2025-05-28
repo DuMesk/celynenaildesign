@@ -212,72 +212,65 @@ flatpickr("#dataEscolhida", {
 // Função para mostrar horários disponíveis
 function mostrarHorarios(dataEscolhida) {
     const horariosDiv = document.getElementById("horarios");
+    horariosDiv.innerHTML = "<p>Carregando...</p>";
 
-    horariosDiv.innerHTML = '';
+    const horariosPossiveis = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
-    const horarios = [9, 10, 11, 13, 14, 15, 16, 17]; // Você pode colocar mais horários aqui
+    const script = document.createElement("script");
+    script.src = `https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec?acao=listarHorarios&data=${dataEscolhida}&callback=preencherHorarios`;
+    document.body.appendChild(script);
 
-    fetch(urlWebApp)
-        .then(response => response.json())
-        .then(agendamentos => {
+    window.preencherHorarios = (dados) => {
+        horariosDiv.innerHTML = '';
 
-            const horariosOcupados = agendamentos
-    .filter(item => {
-        const dataItem = new Date(item.dataEscolhida).toISOString().split('T')[0];
-        return dataItem === dataEscolhida;
-    })
-    .map(item => item.horarioEscolhido?.toString().padStart(5, '0')); // padroniza para 11:00
+        const ocupados = dados.horariosOcupados || [];
 
+        const horariosDisponiveis = horariosPossiveis.filter(h => !ocupados.includes(h));
 
-            horarios.forEach(function(hora) {
-                const horarioFormatado = `${hora}:00`;
+        if (horariosDisponiveis.length === 0) {
+            horariosDiv.innerHTML = "<p><em>Todos os horários estão ocupados nesse dia.</em></p>";
+            return;
+        }
 
-                if (!horariosOcupados.includes(horarioFormatado)) {
-                    const botaoHorario = document.createElement("button");
-                    botaoHorario.textContent = `${hora}h`;
-                    botaoHorario.type = "button";
-                    botaoHorario.classList.add("botao-horario");
+        horariosDisponiveis.forEach(horario => {
+            const botao = document.createElement("button");
+            botao.textContent = horario;
+            botao.type = "button";
+            botao.classList.add("botao-horario");
 
-                    botaoHorario.onclick = function () {
-                        document.querySelectorAll('.botao-horario').forEach(btn => {
-                            btn.classList.remove('selecionado');
-                        });
-                        botaoHorario.classList.add('selecionado');
-                        document.getElementById("horarioEscolhido").value = horarioFormatado;
-                    };
+            botao.onclick = function () {
+                document.querySelectorAll('.botao-horario').forEach(btn => btn.classList.remove('selecionado'));
+                botao.classList.add('selecionado');
+                document.getElementById("horarioEscolhido").value = horario;
+            };
 
-                    horariosDiv.appendChild(botaoHorario);
-                }
-            });
-
-            if (horariosDiv.innerHTML === '') {
-                horariosDiv.innerHTML = "<p><em>Todos os horários já foram agendados neste dia.</em></p>";
-            }
-        })
-        .catch(error => console.error('Erro ao buscar horários:', error));
+            horariosDiv.appendChild(botao);
+        });
+    };
 }
 
 // Carregar as mensagens já recebidas
 function carregarDados() {
-    fetch(urlWebApp)
-        .then(response => response.json())
-        .then(dados => {
-            divDados.innerHTML = "";
-            dados.forEach(item => {
+    const script = document.createElement("script");
+    script.src = `https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec?acao=listarTodos&callback=preencherDados`;
+    document.body.appendChild(script);
+
+    window.preencherDados = (dados) => {
+        const divDados = document.getElementById("dados");
+        divDados.innerHTML = "";
+
+        dados.forEach(item => {
             divDados.innerHTML += `<p>
                 Nome: <strong>${item.nome}</strong><br> 
                 Telefone: ${item.telefone}<br> 
                 Serviço: <strong>${item.servico}</strong><br>
                 Cadastrado em: ${new Date(item.timestamp).toLocaleString('pt-BR')}<br> 
                 Mensagem: ${item.mensagem}<br>
-                Data esolhida: <strong> ${formatarData(item.dataEscolhida)}<br>
-                Hora escolhida: ${formatarHorario(item.horarioEscolhido)} </strong>
-                </p>`;
+                Data escolhida: <strong>${formatarData(item.dataEscolhida)}</strong><br>
+                Hora escolhida: <strong>${formatarHorario(item.horarioEscolhido)}</strong>
+            </p><hr>`;
         });
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados:', error);
-        });
+    };
 }
 
 // Quando enviar o formulário
