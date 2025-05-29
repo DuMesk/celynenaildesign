@@ -217,7 +217,7 @@ function mostrarHorarios(dataEscolhida) {
     const horariosPossiveis = ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
 
     const script = document.createElement("script");
-    script.src = `https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec?acao=listarHorarios&data=${dataEscolhida}&callback=preencherHorarios`;
+    script.src = `${urlWebApp}?acao=listarHorarios&data=${dataEscolhida}&callback=preencherHorarios`;
     document.body.appendChild(script);
 
     window.preencherHorarios = (dados) => {
