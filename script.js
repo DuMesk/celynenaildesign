@@ -192,7 +192,7 @@ const divDados = document.getElementById('dados');
 const TELEFONE_WHATSAPP = "5561983740873";
 
 // URL do seu Web App
-const urlWebApp = 'https://script.google.com/macros/s/AKfycbw5RW-lmA3abuh9z-ti0jL219fcQv8kd2GQgJJdL4BAKMN81jLByQ0YoLJDtPq4DvJ0_g/exec';
+const urlWebApp = 'https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec';
 
 // Inicializa o calendário com Flatpickr
 flatpickr("#dataEscolhida", {
