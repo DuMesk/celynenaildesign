@@ -287,6 +287,7 @@ formulario.addEventListener("submit", function(e) {
     }
 
     const dados = {
+        acao: 'salvar',
         nome: formulario.nome.value,
         telefone: formulario.telefone.value,
         mensagem: formulario.mensagem.value || "Nenhuma observação.",
@@ -317,7 +318,6 @@ formulario.addEventListener("submit", function(e) {
             // Envia os dados se a pessoa confirmou
             fetch(urlWebApp, {
                 method: "POST",
-                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(dados)
             }).then(() => {
