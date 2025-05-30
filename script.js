@@ -316,51 +316,71 @@ formulario.addEventListener("submit", function(e) {
     }).then(result => {
         if (result.isConfirmed) {
             // Envia os dados se a pessoa confirmou
-            fetch(urlWebApp, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dados)
+            function enviarAgendamento() {
+    if (!formulario.horarioEscolhido.value) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Selecione um horário!',
+            text: 'Por favor, escolha um horário antes de confirmar o agendamento.'
+        });
+        return;
+    }
+
+    const dados = {
+        nome: formulario.nome.value,
+        telefone: formulario.telefone.value,
+        mensagem: formulario.mensagem.value || "Nenhuma observação.",
+        dataEscolhida: formulario.dataEscolhida.value,
+        horarioEscolhido: formulario.horarioEscolhido.value,
+        servico: formulario.servico.value
+    };
+
+    const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
+        `nome=${encodeURIComponent(dados.nome)}` +
+        `&telefone=${encodeURIComponent(dados.telefone)}` +
+        `&mensagem=${encodeURIComponent(dados.mensagem)}` +
+        `&dataEscolhida=${encodeURIComponent(dados.dataEscolhida)}` +
+        `&horarioEscolhido=${encodeURIComponent(dados.horarioEscolhido)}` +
+        `&servico=${encodeURIComponent(dados.servico)}`;
+
+    const script = document.createElement("script");
+    script.src = url;
+    document.body.appendChild(script);
+
+    window.retorno = function(response) {
+        if (response.status === "sucesso") {
+            Swal.fire({
+                title: 'Agendamento Confirmado!',
+                text: 'Você será redirecionado para o WhatsApp para finalização.',
+                icon: 'success',
+                confirmButtonText: 'Ir para o WhatsApp',
+                confirmButtonColor: '#25D366'
             }).then(() => {
-                // Mensagem final
-                Swal.fire({
-                    title: 'Agendamento Confirmado!',
-                    text: 'Você será redirecionado para o WhatsApp para finalização.',
-                    icon: 'success',
-                    confirmButtonText: 'Ir para o WhatsApp',
-                    confirmButtonColor: '#25D366'
-                }).then(() => {
-                    // Enviar mensagem para o WhatsApp
+                const mensagem = `🌸 *Celyne Nail Design* 🌸\nhttps://celyne.com.br\n\n` +
+                    `Olá! Gostaria de confirmar meu agendamento:\n\n` +
+                    `• Nome: ${dados.nome}\n` +
+                    `• WhatsApp: ${dados.telefone}\n` +
+                    `• Serviço: ${dados.servico}\n` +
+                    `• Data: ${formatarData(dados.dataEscolhida)}\n` +
+                    `• Horário: ${formatarHorario(dados.horarioEscolhido)}\n` +
+                    `• Observações: ${dados.mensagem}\n\n` +
+                    `Mensagem enviada automaticamente pelo site.`;
 
-                    const mensagem = `🌸 *Celyne Nail Design* 🌸\nhttps://celyne.com.br\n\n` +
-                 `Olá! Gostaria de confirmar meu agendamento:\n\n` +
-                 `• Nome: ${dados.nome}\n` +
-                 `• WhatsApp: ${dados.telefone}\n` +
-                 `• Serviço: ${dados.servico}\n` +
-                 `• Data: ${formatarData(dados.dataEscolhida)}\n` +
-                 `• Horário: ${formatarHorario(dados.horarioEscolhido)}\n` +
-                 `• Observações: ${dados.mensagem}\n\n` +
-                 `Mensagem enviada automaticamente pelo site.`;
+                const linkWhatsApp = `https://wa.me/${TELEFONE_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
+                window.open(linkWhatsApp, "_blank");
 
-
-
-                    const linkWhatsApp = `https://wa.me/${TELEFONE_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
-                    window.open(linkWhatsApp, "_blank");
-
-                    formulario.reset();
-                    document.getElementById("horarios").innerHTML = '';
-                });
-            }).catch(() => {
-                Swal.fire({
-                    title: 'Erro!',
-                    text: 'Houve um problema ao enviar seu agendamento. Tente novamente.',
-                    icon: 'error'
-                });
+                formulario.reset();
+                document.getElementById("horarios").innerHTML = '';
+            });
+        } else {
+            Swal.fire({
+                title: 'Erro!',
+                text: response.mensagem || 'Houve um problema ao enviar seu agendamento. Tente novamente.',
+                icon: 'error'
             });
         }
-    });
-});
-
-
+    };
+}
 
 function formatarData(dataISO) {
     if (!dataISO) return '';
