@@ -184,32 +184,34 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     };
-
-// Sistema de Agendamento
+// =============================================
+// SISTEMA DE AGENDAMENTO
+// =============================================
 
 const formulario = document.getElementById('formulario');
 const divDados = document.getElementById('dados');
 const TELEFONE_WHATSAPP = "5561983740873";
 
-// URL do seu Web App
 const urlWebApp = 'https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec';
 
-// Inicializa o calendário com Flatpickr
+// ============================
+// Calendário
+// ============================
 flatpickr("#dataEscolhida", {
-    dateFormat: "d/m/Y",  // VISUAL para o cliente
-    altInput: true,       // campo bonito
-    altFormat: "d/m/Y",   // o que aparece
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
     locale: "pt",
     onChange: function(selectedDates, dateStr, instance) {
-        // Salva internamente no formato ISO (usado para buscas e backend)
         const valorDataISO = instance.formatDate(selectedDates[0], "Y-m-d");
-        formulario.dataEscolhida.value = valorDataISO; // isso será enviado para o backend
-        mostrarHorarios(valorDataISO); // usa ISO para buscar horários bloqueados
+        formulario.dataEscolhida.value = valorDataISO;
+        mostrarHorarios(valorDataISO);
     }
 });
 
-
-// Função para mostrar horários disponíveis
+// ============================
+// Mostrar horários disponíveis
+// ============================
 function mostrarHorarios(dataEscolhida) {
     const horariosDiv = document.getElementById("horarios");
     horariosDiv.innerHTML = "<p>Carregando...</p>";
@@ -224,7 +226,6 @@ function mostrarHorarios(dataEscolhida) {
         horariosDiv.innerHTML = '';
 
         const ocupados = dados.horariosOcupados || [];
-
         const horariosDisponiveis = horariosPossiveis.filter(h => !ocupados.includes(h));
 
         if (horariosDisponiveis.length === 0) {
@@ -249,74 +250,10 @@ function mostrarHorarios(dataEscolhida) {
     };
 }
 
-// Carregar as mensagens já recebidas
-function carregarDados() {
-    const script = document.createElement("script");
-    script.src = `https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec?acao=listarTodos&callback=preencherDados`;
-    document.body.appendChild(script);
-
-    window.preencherDados = (dados) => {
-        const divDados = document.getElementById("dados");
-        divDados.innerHTML = "";
-
-        dados.forEach(item => {
-            divDados.innerHTML += `<p>
-                Nome: <strong>${item.nome}</strong><br> 
-                Telefone: ${item.telefone}<br> 
-                Serviço: <strong>${item.servico}</strong><br>
-                Cadastrado em: ${new Date(item.timestamp).toLocaleString('pt-BR')}<br> 
-                Mensagem: ${item.mensagem}<br>
-                Data escolhida: <strong>${formatarData(item.dataEscolhida)}</strong><br>
-                Hora escolhida: <strong>${formatarHorario(item.horarioEscolhido)}</strong>
-            </p><hr>`;
-        });
-    };
-}
-
-// Quando enviar o formulário
-formulario.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    if (!formulario.horarioEscolhido.value) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Selecione um horário!',
-            text: 'Por favor, escolha um horário antes de confirmar o agendamento.'
-        });
-        return;
-    }
-
-    const dados = {
-        acao: 'salvar',
-        nome: formulario.nome.value,
-        telefone: formulario.telefone.value,
-        mensagem: formulario.mensagem.value || "Nenhuma observação.",
-        dataEscolhida: formulario.dataEscolhida.value,
-        horarioEscolhido: formulario.horarioEscolhido.value,
-        servico: formulario.servico.value
-    };
-
-    // Exibir resumo de confirmação
-    Swal.fire({
-        title: 'Confirmar Agendamento?',
-        html: `
-            <p><strong>Nome:</strong> ${dados.nome}</p>
-            <p><strong>Telefone:</strong> ${dados.telefone}</p>
-            <p><strong>Serviço:</strong> ${dados.servico}</p>
-            <p><strong>Data:</strong> ${formatarData(dados.dataEscolhida)}</p>
-            <p><strong>Horário:</strong> ${formatarHorario(dados.horarioEscolhido)}</p>
-            <p><strong>Observações:</strong> ${dados.mensagem}</p>
-        `,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Corrigir Dados',
-        confirmButtonColor: '#28a745',
-        cancelButtonColor: '#d33'
-    }).then(result => {
-        if (result.isConfirmed) {
-            // Envia os dados se a pessoa confirmou
-            function enviarAgendamento() {
+// ============================
+// Enviar Agendamento
+// ============================
+function enviarAgendamento() {
     if (!formulario.horarioEscolhido.value) {
         Swal.fire({
             icon: 'warning',
@@ -382,6 +319,35 @@ formulario.addEventListener("submit", function(e) {
     };
 }
 
+// ============================
+// Carregar Dados
+// ============================
+function carregarDados() {
+    const script = document.createElement("script");
+    script.src = `${urlWebApp}?acao=listarTodos&callback=preencherDados`;
+    document.body.appendChild(script);
+
+    window.preencherDados = (dados) => {
+        const divDados = document.getElementById("dados");
+        divDados.innerHTML = "";
+
+        dados.forEach(item => {
+            divDados.innerHTML += `<p>
+                Nome: <strong>${item.nome}</strong><br> 
+                Telefone: ${item.telefone}<br> 
+                Serviço: <strong>${item.servico}</strong><br>
+                Cadastrado em: ${new Date(item.timestamp).toLocaleString('pt-BR')}<br> 
+                Mensagem: ${item.mensagem}<br>
+                Data escolhida: <strong>${formatarData(item.dataEscolhida)}</strong><br>
+                Hora escolhida: <strong>${formatarHorario(item.horarioEscolhido)}</strong>
+            </p><hr>`;
+        });
+    };
+}
+
+// ============================
+// Formatação de data e hora
+// ============================
 function formatarData(dataISO) {
     if (!dataISO) return '';
     const data = new Date(dataISO);
@@ -390,27 +356,24 @@ function formatarData(dataISO) {
 
 function formatarHorario(horario) {
     if (!horario) return '';
-
-    // Se vier como tipo ISO (ex: "1899-12-30T10:00:00.000Z"), extrai a hora da string
     if (typeof horario === 'string' && horario.includes('T')) {
         const partes = horario.split('T')[1].split(':');
         const hora = partes[0];
         const minuto = partes[1];
         return `${hora}:${minuto}h`;
     }
-
-    // Se vier como "10:00", apenas adiciona 'h'
     if (typeof horario === 'string' && horario.length >= 5) {
         return horario.slice(0, 5) + 'h';
     }
-
     return horario;
 }
 
+// ============================
+// Máscara telefone
+// ============================
 document.getElementById('telefone').addEventListener('input', function(e) {
-    let valor = e.target.value.replace(/\D/g, ''); // remove tudo que não for número
-
-    if (valor.length > 11) valor = valor.slice(0, 11); // limita a 11 dígitos
+    let valor = e.target.value.replace(/\D/g, '');
+    if (valor.length > 11) valor = valor.slice(0, 11);
 
     let formatado = '';
     if (valor.length > 0) formatado = '(' + valor.slice(0, 2);
@@ -420,9 +383,9 @@ document.getElementById('telefone').addEventListener('input', function(e) {
     e.target.value = formatado;
 });
 
-    // =============================================
-    // INICIALIZAÇÃO DE TODOS OS COMPONENTES
-    // =============================================
-    initTestimonialSlider();
-    initScrollAnimations();
-    initGalleryLightbox();
+// ============================
+// Inicialização de componentes extras
+// ============================
+initTestimonialSlider();
+initScrollAnimations();
+initGalleryLightbox();
