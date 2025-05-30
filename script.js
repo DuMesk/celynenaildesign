@@ -426,4 +426,3 @@ document.getElementById('telefone').addEventListener('input', function(e) {
     initTestimonialSlider();
     initScrollAnimations();
     initGalleryLightbox();
-});
