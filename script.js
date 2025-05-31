@@ -370,6 +370,11 @@ function formatarHorario(horario) {
     }
     return horario;
 }
+// 🔥 NOVA FUNÇÃO — Converte de ISO (YYYY-MM-DD) para DD/MM/YYYY
+function formatarDataParaBR(dataISO) {
+    const partes = dataISO.split('-');
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
 
 // ============================
 // Máscara telefone
