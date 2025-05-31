@@ -279,8 +279,6 @@ document.addEventListener("DOMContentLoaded", function () {
       ...dados,
       dataEscolhida: formatarDataParaBR(dados.dataEscolhida),
       horarioEscolhido: formatarHoraParaTexto(dados.horarioEscolhido),
-      console.log("Hora enviada:", dados.horarioEscolhido);
-
     };
 
     const url =
@@ -288,10 +286,8 @@ document.addEventListener("DOMContentLoaded", function () {
       `nome=${encodeURIComponent(dadosCorrigidos.nome)}` +
       `&telefone=${encodeURIComponent(dadosCorrigidos.telefone)}` +
       `&mensagem=${encodeURIComponent(dadosCorrigidos.mensagem)}` +
-      `&dataEscolhida=${encodeURIComponent(dadosCorrigidos.dataEscolhida)}` + // ✅ AGORA VAI NO FORMATO CERTO
-      `&horarioEscolhido=${encodeURIComponent(
-        dadosCorrigidos.horarioEscolhido
-      )}` +
+      `&dataEscolhida=${encodeURIComponent(dadosCorrigidos.dataEscolhida)}` + 
+      `&horarioEscolhido=${encodeURIComponent(dadosCorrigidos.horarioEscolhido)}` +
       `&servico=${encodeURIComponent(dadosCorrigidos.servico)}`;
 
     const script = document.createElement("script");
