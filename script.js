@@ -279,6 +279,8 @@ document.addEventListener("DOMContentLoaded", function () {
       ...dados,
       dataEscolhida: formatarDataParaBR(dados.dataEscolhida),
       horarioEscolhido: formatarHoraParaTexto(dados.horarioEscolhido),
+      console.log("Hora enviada:", dados.horarioEscolhido);
+
     };
 
     const url =
