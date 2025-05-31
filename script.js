@@ -253,25 +253,7 @@ function mostrarHorarios(dataEscolhida) {
 // ============================
 // Enviar Agendamento
 // ============================
-function enviarAgendamento() {
-    if (!formulario.horarioEscolhido.value) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Selecione um horário!',
-            text: 'Por favor, escolha um horário antes de confirmar o agendamento.'
-        });
-        return;
-    }
-
-    const dados = {
-        nome: formulario.nome.value,
-        telefone: formulario.telefone.value,
-        mensagem: formulario.mensagem.value || "Nenhuma observação.",
-        dataEscolhida: formulario.dataEscolhida.value,
-        horarioEscolhido: formulario.horarioEscolhido.value,
-        servico: formulario.servico.value
-    };
-
+function enviarAgendamento(dados) {
     const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
         `nome=${encodeURIComponent(dados.nome)}` +
         `&telefone=${encodeURIComponent(dados.telefone)}` +
@@ -320,30 +302,51 @@ function enviarAgendamento() {
 }
 
 // ============================
-// Carregar Dados
+// Evento de envio do formulário
 // ============================
-function carregarDados() {
-    const script = document.createElement("script");
-    script.src = `${urlWebApp}?acao=listarTodos&callback=preencherDados`;
-    document.body.appendChild(script);
+formulario.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-    window.preencherDados = (dados) => {
-        const divDados = document.getElementById("dados");
-        divDados.innerHTML = "";
-
-        dados.forEach(item => {
-            divDados.innerHTML += `<p>
-                Nome: <strong>${item.nome}</strong><br> 
-                Telefone: ${item.telefone}<br> 
-                Serviço: <strong>${item.servico}</strong><br>
-                Cadastrado em: ${new Date(item.timestamp).toLocaleString('pt-BR')}<br> 
-                Mensagem: ${item.mensagem}<br>
-                Data escolhida: <strong>${formatarData(item.dataEscolhida)}</strong><br>
-                Hora escolhida: <strong>${formatarHorario(item.horarioEscolhido)}</strong>
-            </p><hr>`;
+    if (!formulario.horarioEscolhido.value) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Selecione um horário!',
+            text: 'Por favor, escolha um horário antes de confirmar o agendamento.'
         });
+        return;
+    }
+
+    const dados = {
+        nome: formulario.nome.value,
+        telefone: formulario.telefone.value,
+        mensagem: formulario.mensagem.value || "Nenhuma observação.",
+        dataEscolhida: formulario.dataEscolhida.value,
+        horarioEscolhido: formulario.horarioEscolhido.value,
+        servico: formulario.servico.value
     };
-}
+
+    Swal.fire({
+        title: 'Confirmar Agendamento?',
+        html: `
+            <p><strong>Nome:</strong> ${dados.nome}</p>
+            <p><strong>Telefone:</strong> ${dados.telefone}</p>
+            <p><strong>Serviço:</strong> ${dados.servico}</p>
+            <p><strong>Data:</strong> ${formatarData(dados.dataEscolhida)}</p>
+            <p><strong>Horário:</strong> ${formatarHorario(dados.horarioEscolhido)}</p>
+            <p><strong>Observações:</strong> ${dados.mensagem}</p>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Corrigir Dados',
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33'
+    }).then(result => {
+        if (result.isConfirmed) {
+            enviarAgendamento(dados);
+        }
+    });
+});
 
 // ============================
 // Formatação de data e hora
