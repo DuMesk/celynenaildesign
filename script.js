@@ -254,13 +254,21 @@ function mostrarHorarios(dataEscolhida) {
 // Enviar Agendamento
 // ============================
 function enviarAgendamento(dados) {
+
+    // 🔥 Aqui faz a correção da data ANTES de enviar pra planilha
+    const dadosCorrigidos = {
+        ...dados,
+        dataEscolhida: formatarDataParaBR(dados.dataEscolhida)
+    };
+
     const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
-        `nome=${encodeURIComponent(dados.nome)}` +
-        `&telefone=${encodeURIComponent(dados.telefone)}` +
-        `&mensagem=${encodeURIComponent(dados.mensagem)}` +
-        `&dataEscolhida=${encodeURIComponent(dados.dataEscolhida)}` +
-        `&horarioEscolhido=${encodeURIComponent(dados.horarioEscolhido)}` +
-        `&servico=${encodeURIComponent(dados.servico)}`;
+        `nome=${encodeURIComponent(dadosCorrigidos.nome)}` +
+        `&telefone=${encodeURIComponent(dadosCorrigidos.telefone)}` +
+        `&mensagem=${encodeURIComponent(dadosCorrigidos.mensagem)}` +
+        `&dataEscolhida=${encodeURIComponent(dadosCorrigidos.dataEscolhida)}` + // ✅ AGORA VAI NO FORMATO CERTO
+        `&horarioEscolhido=${encodeURIComponent(dadosCorrigidos.horarioEscolhido)}` +
+        `&servico=${encodeURIComponent(dadosCorrigidos.servico)}`;
+
 
     const script = document.createElement("script");
     script.src = url;
