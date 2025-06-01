@@ -276,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function enviarAgendamento(dados) {
     const dadosCorrigidos = {
         ...dados,
-        horarioEscolhido: formatarHoraParaTexto(dados.horarioEscolhido) // 🔥 SOMENTE a hora é ajustada
+        horarioEscolhido: formatarHoraParaTexto(dados.horarioEscolhido) // ✅ 🔥 Corrigindo a hora
     };
 
     const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
@@ -302,12 +302,12 @@ function enviarAgendamento(dados) {
             }).then(() => {
                 const mensagem = `🌸 *Celyne Nail Design* 🌸\nhttps://celyne.com.br\n\n` +
                     `Olá! Gostaria de confirmar meu agendamento:\n\n` +
-                    `• Nome: ${dados.nome}\n` +
-                    `• WhatsApp: ${dados.telefone}\n` +
-                    `• Serviço: ${dados.servico}\n` +
-                    `• Data: ${formatarData(dados.dataEscolhida)}\n` +
-                    `• Horário: ${formatarHorario(dados.horarioEscolhido)}\n` +
-                    `• Observações: ${dados.mensagem}\n\n` +
+                    `• Nome: ${dadosCorrigidos.nome}\n` +
+                    `• WhatsApp: ${dadosCorrigidos.telefone}\n` +
+                    `• Serviço: ${dadosCorrigidos.servico}\n` +
+                    `• Data: ${dadosCorrigidos.dataEscolhida}\n` +
+                    `• Horário: ${dadosCorrigidos.horarioEscolhido}\n` +
+                    `• Observações: ${dadosCorrigidos.mensagem}\n\n` +
                     `Mensagem enviada automaticamente pelo site.`;
 
                 const linkWhatsApp = `https://wa.me/${TELEFONE_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
