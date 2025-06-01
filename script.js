@@ -204,16 +204,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // Calendário
   // ============================
   flatpickr("#dataEscolhida", {
-    dateFormat: "d/m/Y",
-    altInput: true,
-    altFormat: "d/m/Y",
+    dateFormat: "d/m/Y", 
+    altInput: true,       
+    altFormat: "d/m/Y",   
     locale: "pt",
     onChange: function (selectedDates, dateStr, instance) {
-      const valorDataISO = instance.formatDate(selectedDates[0], "Y-m-d");
-      formulario.dataEscolhida.value = valorDataISO; 
-      mostrarHorarios(valorDataISO); 
-  },
-  });
+        const valorDataBR = instance.formatDate(selectedDates[0], "d/m/Y"); 
+        formulario.dataEscolhida.value = valorDataBR;
+        mostrarHorarios(valorDataBR); 
+    },
+});
 
   // ============================
   // Mostrar horários disponíveis
