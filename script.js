@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
     onChange: function (selectedDates, dateStr, instance) {
       const valorDataBR = instance.formatDate(selectedDates[0], "d/m/Y");
       formulario.dataEscolhida.value = valorDataBR;
-      mostrarHorarios(valorDataISO);
+      mostrarHorarios(valorDataBR);
     },
   });
 
