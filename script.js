@@ -209,10 +209,10 @@ document.addEventListener("DOMContentLoaded", function () {
     altFormat: "d/m/Y",
     locale: "pt",
     onChange: function (selectedDates, dateStr, instance) {
-      const valorDataBR = instance.formatDate(selectedDates[0], "d/m/Y");
-      formulario.dataEscolhida.value = valorDataBR;
-      mostrarHorarios(valorDataBR);
-    },
+      const valorDataISO = instance.formatDate(selectedDates[0], "Y-m-d");
+      formulario.dataEscolhida.value = valorDataISO; 
+      mostrarHorarios(valorDataISO); 
+  },
   });
 
   // ============================
