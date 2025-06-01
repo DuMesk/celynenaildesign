@@ -384,20 +384,34 @@ function enviarAgendamento(dados) {
     return data.toLocaleDateString("pt-BR");
   }
 
-  function formatarHorario(horario) {
+function formatarHorario(horario) {
     if (!horario) return "";
+
+    // Se vier no formato data ISO de horário
     if (typeof horario === "string" && horario.includes("T")) {
-      const partes = horario.split("T")[1].split(":");
-      const hora = partes[0];
-      const minuto = partes[1];
-      return `${hora}:${minuto}h`;
+        const partes = horario.split("T")[1].split(":");
+        const hora = partes[0];
+        const minuto = partes[1];
+        return `${hora}:${minuto}h`;
     }
-    if (typeof horario === "string" && horario.length >= 5) {
-      return horario.slice(0, 5) + "h";
+
+    // Se vier como número (Google Sheets às vezes salva como número representando hora)
+    if (typeof horario === "number") {
+        const totalMinutos = Math.round(horario * 24 * 60);
+        const horas = Math.floor(totalMinutos / 60);
+        const minutos = totalMinutos % 60;
+        return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}h`;
     }
+
+    // Se já vier no formato texto tipo "15:00"
+    if (typeof horario === "string" && horario.length >= 4) {
+        return horario.slice(0, 5) + "h";
+    }
+
     return horario;
-  }
-  // 🔥 NOVA FUNÇÃO — Converte de ISO (YYYY-MM-DD) para DD/MM/YYYY
+}
+
+  
   function formatarDataParaBR(dataISO) {
     const partes = dataISO.split("-");
     return `${partes[2]}/${partes[1]}/${partes[0]}`;
