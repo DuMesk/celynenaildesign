@@ -276,16 +276,19 @@ document.addEventListener("DOMContentLoaded", function () {
 function enviarAgendamento(dados) {
     const dadosCorrigidos = {
         ...dados,
-        horarioEscolhido: formatarHoraParaTexto(dados.horarioEscolhido) // ✅ 🔥 Corrigindo a hora
+    horarioEscolhido: formulario.horarioEscolhido.value.slice(0,5) 
+};
+
     };
 
-    const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
-        `nome=${encodeURIComponent(dadosCorrigidos.nome)}` +
-        `&telefone=${encodeURIComponent(dadosCorrigidos.telefone)}` +
-        `&mensagem=${encodeURIComponent(dadosCorrigidos.mensagem)}` +
-        `&dataEscolhida=${encodeURIComponent(dadosCorrigidos.dataEscolhida)}` + 
-        `&horarioEscolhido=${encodeURIComponent(dadosCorrigidos.horarioEscolhido)}` +
-        `&servico=${encodeURIComponent(dadosCorrigidos.servico)}`;
+const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
+    `nome=${encodeURIComponent(dadosCorrigidos.nome)}` +
+    `&telefone=${encodeURIComponent(dadosCorrigidos.telefone)}` +
+    `&mensagem=${encodeURIComponent(dadosCorrigidos.mensagem)}` +
+    `&dataEscolhida=${encodeURIComponent(dadosCorrigidos.dataEscolhida)}` +
+    `&horarioEscolhido=${encodeURIComponent(dadosCorrigidos.horarioEscolhido)}` +
+    `&servico=${encodeURIComponent(dadosCorrigidos.servico)}`;
+
 
     const script = document.createElement("script");
     script.src = url;
