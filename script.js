@@ -378,16 +378,23 @@ function enviarAgendamento(dados) {
   // ============================
   // Formatação de data e hora
   // ============================
-  function formatarData(dataISO) {
-    if (!dataISO) return "";
-    const data = new Date(dataISO);
-    return data.toLocaleDateString("pt-BR");
-  }
+function formatarData(dataTexto) {
+    if (!dataTexto) return "";
+    if (dataTexto.includes("-")) {
+        const [ano, mes, dia] = dataTexto.split("-");
+        return `${dia}/${mes}/${ano}`;
+    }
+    if (dataTexto.includes("/")) {
+        return dataTexto;
+    }
+    return dataTexto;
+}
+
 
 function formatarHorario(horario) {
     if (!horario) return "";
 
-    // Se vier no formato data ISO de horário
+    // Se vier no formato tipo 1899-12-30T15:00:00.000Z
     if (typeof horario === "string" && horario.includes("T")) {
         const partes = horario.split("T")[1].split(":");
         const hora = partes[0];
@@ -395,7 +402,7 @@ function formatarHorario(horario) {
         return `${hora}:${minuto}h`;
     }
 
-    // Se vier como número (Google Sheets às vezes salva como número representando hora)
+    // Se vier como número (Sheets salva como número decimal representando hora)
     if (typeof horario === "number") {
         const totalMinutos = Math.round(horario * 24 * 60);
         const horas = Math.floor(totalMinutos / 60);
@@ -403,13 +410,14 @@ function formatarHorario(horario) {
         return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}h`;
     }
 
-    // Se já vier no formato texto tipo "15:00"
+    // Se vier como texto tipo "15:00"
     if (typeof horario === "string" && horario.length >= 4) {
         return horario.slice(0, 5) + "h";
     }
 
     return horario;
 }
+
 
   
   function formatarDataParaBR(dataISO) {
@@ -418,13 +426,14 @@ function formatarHorario(horario) {
   }
 
   // 🔥 Converter hora para garantir que vai como texto no formato HH:MM
-  function formatarHoraParaTexto(hora) {
+function formatarHoraParaTexto(hora) {
     if (!hora) return "";
     if (typeof hora === "string") {
-      return hora.slice(0, 5); // Garante que fica HH:MM
+        return hora.slice(0, 5); // Garante HH:MM
     }
     return hora.toString();
-  }
+}
+
 
   // ============================
   // Máscara telefone
