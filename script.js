@@ -192,10 +192,194 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================================
   // SISTEMA DE AGENDAMENTO
   // =============================================
+const formulario = document.getElementById("formulario");
+const TELEFONE_WHATSAPP = "5561983740873";
 
-  const formulario = document.getElementById("formulario");
-  const divDados = document.getElementById("dados");
-  const TELEFONE_WHATSAPP = "5561983740873";
+const urlWebApp = "https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec";
+
+// ============================
+// Calendário
+// ============================
+flatpickr("#dataEscolhida", {
+    dateFormat: "d/m/Y",
+    altInput: true,
+    altFormat: "d/m/Y",
+    locale: "pt",
+    onChange: function (selectedDates, dateStr, instance) {
+        const valorData = instance.formatDate(selectedDates[0], "d/m/Y");
+        formulario.dataEscolhida.value = valorData;
+        mostrarHorarios(valorData);
+    },
+});
+
+// ============================
+// Mostrar horários disponíveis
+// ============================
+function mostrarHorarios(dataEscolhida) {
+    const horariosDiv = document.getElementById("horarios");
+    horariosDiv.innerHTML = "<p>Carregando...</p>";
+
+    const horariosPossiveis = [
+        "09:00",
+        "10:00",
+        "11:00",
+        "13:00",
+        "14:00",
+        "15:00",
+        "16:00",
+        "17:00",
+    ];
+
+    const script = document.createElement("script");
+    script.src = `${urlWebApp}?acao=listarHorarios&data=${dataEscolhida}&callback=preencherHorarios`;
+    document.body.appendChild(script);
+
+    window.preencherHorarios = (dados) => {
+        horariosDiv.innerHTML = "";
+
+        const ocupados = dados.horariosOcupados || [];
+        const horariosDisponiveis = horariosPossiveis.filter(h => !ocupados.includes(h));
+
+        if (horariosDisponiveis.length === 0) {
+            horariosDiv.innerHTML = "<p><em>Todos os horários estão ocupados nesse dia.</em></p>";
+            return;
+        }
+
+        horariosDisponiveis.forEach(horario => {
+            const botao = document.createElement("button");
+            botao.textContent = horario;
+            botao.type = "button";
+            botao.classList.add("botao-horario");
+
+            botao.onclick = function () {
+                document.querySelectorAll(".botao-horario").forEach(btn => btn.classList.remove("selecionado"));
+                botao.classList.add("selecionado");
+                formulario.horarioEscolhido.value = horario;
+            };
+
+            horariosDiv.appendChild(botao);
+        });
+    };
+}
+
+// ============================
+// Enviar Agendamento
+// ============================
+function enviarAgendamento(dados) {
+    const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
+        `nome=${encodeURIComponent(dados.nome)}` +
+        `&telefone=${encodeURIComponent(dados.telefone)}` +
+        `&mensagem=${encodeURIComponent(dados.mensagem)}` +
+        `&dataEscolhida=${encodeURIComponent(dados.dataEscolhida)}` +
+        `&horarioEscolhido=${encodeURIComponent(dados.horarioEscolhido)}` +
+        `&servico=${encodeURIComponent(dados.servico)}`;
+
+    const script = document.createElement("script");
+    script.src = url;
+    document.body.appendChild(script);
+
+    window.retorno = function (response) {
+        if (response.status === "sucesso") {
+            Swal.fire({
+                title: 'Agendamento Confirmado!',
+                text: 'Você será redirecionado para o WhatsApp para finalização.',
+                icon: 'success',
+                confirmButtonText: 'Ir para o WhatsApp',
+                confirmButtonColor: '#25D366'
+            }).then(() => {
+                const mensagem = `🌸 *Celyne Nail Design* 🌸\nhttps://celyne.com.br\n\n` +
+                    `Olá! Gostaria de confirmar meu agendamento:\n\n` +
+                    `• Nome: ${dados.nome}\n` +
+                    `• WhatsApp: ${dados.telefone}\n` +
+                    `• Serviço: ${dados.servico}\n` +
+                    `• Data: ${dados.dataEscolhida}\n` +
+                    `• Horário: ${dados.horarioEscolhido}\n` +
+                    `• Observações: ${dados.mensagem}\n\n` +
+                    `Mensagem enviada automaticamente pelo site.`;
+
+                const linkWhatsApp = `https://wa.me/${TELEFONE_WHATSAPP}?text=${encodeURIComponent(mensagem)}`;
+                window.open(linkWhatsApp, "_blank");
+
+                formulario.reset();
+                document.getElementById("horarios").innerHTML = '';
+            });
+        } else {
+            Swal.fire({
+                title: 'Erro!',
+                text: response.mensagem || 'Houve um problema ao enviar seu agendamento. Tente novamente.',
+                icon: 'error'
+            });
+        }
+    };
+}
+
+// ============================
+// Evento de envio do formulário
+// ============================
+formulario.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!formulario.horarioEscolhido.value) {
+        Swal.fire({
+            icon: "warning",
+            title: "Selecione um horário!",
+            text: "Por favor, escolha um horário antes de confirmar o agendamento.",
+        });
+        return;
+    }
+
+    const dados = {
+        nome: formulario.nome.value,
+        telefone: formulario.telefone.value,
+        mensagem: formulario.mensagem.value || "Nenhuma observação.",
+        dataEscolhida: formulario.dataEscolhida.value,
+        horarioEscolhido: formulario.horarioEscolhido.value,
+        servico: formulario.servico.value,
+    };
+
+    Swal.fire({
+        title: "Confirmar Agendamento?",
+        html: `
+            <p><strong>Nome:</strong> ${dados.nome}</p>
+            <p><strong>Telefone:</strong> ${dados.telefone}</p>
+            <p><strong>Serviço:</strong> ${dados.servico}</p>
+            <p><strong>Data:</strong> ${dados.dataEscolhida}</p>
+            <p><strong>Horário:</strong> ${dados.horarioEscolhido}</p>
+            <p><strong>Observações:</strong> ${dados.mensagem}</p>
+        `,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Corrigir Dados",
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#d33",
+    }).then(result => {
+        if (result.isConfirmed) {
+            enviarAgendamento(dados);
+        }
+    });
+});
+
+// ============================
+// Máscara telefone
+// ============================
+document.getElementById("telefone").addEventListener("input", function (e) {
+    let valor = e.target.value.replace(/\D/g, "");
+    if (valor.length > 11) valor = valor.slice(0, 11);
+
+    let formatado = "";
+    if (valor.length > 0) formatado = "(" + valor.slice(0, 2);
+    if (valor.length >= 3) formatado += ") " + valor.slice(2, 7);
+    if (valor.length >= 8) formatado += "-" + valor.slice(7);
+
+    e.target.value = formatado;
+});
+
+  
+  /*
+//  const formulario = document.getElementById("formulario");
+//  const divDados = document.getElementById("dados");
+//  const TELEFONE_WHATSAPP = "5561983740873";
 
   const urlWebApp =
     "https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec";
@@ -449,7 +633,7 @@ function formatarHoraParaTexto(hora) {
 
     e.target.value = formatado;
   });
-
+*/
   // ============================
   // Inicialização de componentes extras
   // ============================
