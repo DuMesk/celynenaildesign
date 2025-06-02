@@ -462,7 +462,8 @@ const TELEFONE_WHATSAPP = "5561983740873";
 function enviarAgendamento(dados) {
     const dadosCorrigidos = {
         ...dados,
-        horarioEscolhido: formulario.horarioEscolhido.value.slice(0,5) // 🔥 Garante hora no formato texto
+        dataEscolhida: formulario.dataEscolhida.value,
+        horarioEscolhido: formulario.horarioEscolhido.value.slice(0,5)
     };
 
     const url = `${urlWebApp}?acao=salvar&callback=retorno&` +
@@ -486,7 +487,7 @@ function enviarAgendamento(dados) {
                 confirmButtonText: 'Ir para o WhatsApp',
                 confirmButtonColor: '#25D366'
             }).then(() => {
-                const mensagem = `🌸 *Celyne Nail Design* 🌸\nhttps://celyne.com.br\n\n` +
+                const mensagem = `🌸 *Celyne Nail Design* 🌸\n` +
                     `Olá! Gostaria de confirmar meu agendamento:\n\n` +
                     `• Nome: ${dadosCorrigidos.nome}\n` +
                     `• WhatsApp: ${dadosCorrigidos.telefone}\n` +
