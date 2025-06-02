@@ -192,6 +192,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================================
   // SISTEMA DE AGENDAMENTO
   // =============================================
+
+/*  
 const formulario = document.getElementById("formulario");
 const TELEFONE_WHATSAPP = "5561983740873";
 
@@ -376,7 +378,7 @@ document.getElementById("telefone").addEventListener("input", function (e) {
 });
 
   
-  /*
+  */
 //  const formulario = document.getElementById("formulario");
 //  const divDados = document.getElementById("dados");
 //  const TELEFONE_WHATSAPP = "5561983740873";
@@ -633,7 +635,7 @@ function formatarHoraParaTexto(hora) {
 
     e.target.value = formatado;
   });
-*/
+
   // ============================
   // Inicialização de componentes extras
   // ============================
