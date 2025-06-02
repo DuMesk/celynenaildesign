@@ -426,10 +426,10 @@ document.getElementById("telefone").addEventListener("input", function (e) {
     window.preencherHorarios = (dados) => {
       horariosDiv.innerHTML = "";
 
-      const ocupados = dados.horariosOcupados || [];
-      const horariosDisponiveis = horariosPossiveis.filter(
-        (h) => !ocupados.includes(h)
-      );
+      const ocupados = (dados.horariosOcupados || []).map(h => h.toString().slice(0, 5));
+    const horariosDisponiveis = horariosPossiveis.filter(
+      (h) => !ocupados.includes(h)
+    );
 
       if (horariosDisponiveis.length === 0) {
         horariosDiv.innerHTML =
