@@ -378,10 +378,10 @@ document.getElementById("telefone").addEventListener("input", function (e) {
 });
 
   
-  */
-//  const formulario = document.getElementById("formulario");
-//  const divDados = document.getElementById("dados");
-//  const TELEFONE_WHATSAPP = "5561983740873";
+*/
+const formulario = document.getElementById("formulario");
+const divDados = document.getElementById("dados");
+const TELEFONE_WHATSAPP = "5561983740873";
 
   const urlWebApp =
     "https://script.google.com/macros/s/AKfycbxZMSj_JPcpS_HJrKyiLta7yE8aLCaffqcljA42J1Kp9gIZ5JHpu_HOOwBRLQIzfW4rhg/exec";
